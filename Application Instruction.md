@@ -1,98 +1,86 @@
+# Golf Analytics Application Instruction
 
-# Importing installed packages\import streamlit as st
-import mysql.connector
-import pandas as pd
-import plotly.express as px
-import streamlit as st
+## Introduction
+The **Golf Analytics Application** is a web-based application built using **Streamlit** that allows users to query and visualize **PGA Tour Golf Data** stored in a **MySQL database**. This guide provides a step-by-step explanation of how to use the application efficiently.
 
-# Function to establish MySQL database connection
-def connect_db():
-    return mysql.connector.connect(
-        host="127.0.0.1",
-        user="root", 
-        password="Broncos1998!", 
-        database="golf"
-        )
 
-# Function to execute SQL queries
-def run_query(query):
-    #set database connection to None
-    conn = None
-    try:
-        # Connect database
-        conn = connect_db()
-        cursor = conn.cursor(dictionary=True)
-        # Execute user query
-        cursor.execute(query)
-        data = cursor.fetchall()
-        # Return result in dataframe
-        return pd.DataFrame(data)
-    except Exception as e:
-        # Error message
-        st.error(f"Error executing query: {e}")
-        return pd.DataFrame()
-    finally:
-        if conn:
-            conn.close()
+## Pre-requisites
+### **Step 1: Python Libraries and Packages
+Ensure you have Python and the required libraries installed. Use the following command in your terminal:
+```bash
+pip install streamlit mysql-connector-python pandas plotly
+```
 
-# Streamlit UI
-st.set_page_config(page_title="PGA Tour Analytics", layout="wide")
+### **Step 2: Database Setup**
+Install MySQL/MySQLWorkBench and run golf_dbsetup_script.sql, a script that will:
+- Establish database
+- Create tables and schemas
+- Load data
 
-st.title("📊 PGA Tour Analytics")
+### **Step 3: Database and Interface Connection
+- Open Golf_SQL_Interface.py file, and update the placeholders in lines 8-15 with your own MySQL administration data.
+- Save the file.
 
-# Sidebar: Select a Table to Query
-st.sidebar.header("Database Controls")
-# Table Names
-tables = ["Players", "Tournaments", "TournamentParticipation", "PerformanceStats", "Financials"] 
-# Dropdown for table selection
-selected_table = st.sidebar.selectbox("Select a Table", tables)
+### **Step 4: Run the Application**
+Execute the following command in your terminal:
+```bash
+streamlit run Golf_SQL_Interface.py
+```
 
-# Session state to persist query results
-if "query_results" not in st.session_state:
-    st.session_state.query_results = None
+The application will launch in your default web browser.
 
-# Display Data from the Selected Table
-st.subheader(f"📋 Data from {selected_table}")
-df = run_query(f"SELECT * FROM {selected_table} LIMIT 100")
-st.dataframe(df)
+---
 
-# Custom SQL Querying
-st.sidebar.subheader("Run a Custom SQL Query")
-# User query input box
-query_input = st.sidebar.text_area("Enter SQL Query", f"SELECT * FROM {selected_table} LIMIT 10")
-# User query execution button
-query_button = st.sidebar.button("Run Query")
+## User Interface Overview
+### **Sidebar Controls**
+Located on the left, the sidebar allows users to:
+- **Select a database table** from the dropdown menu to easily view the raw tables.
+- **Run a custom SQL query**
 
-# Run query and store results in session state
-if query_button:
-    st.session_state.query_results = run_query(query_input)
+### **Main Display**
+- **Table Data Preview:** Displays the first 100 rows of the selected table.
+- **Custom Query Results:** Displays query results in a structured table.
+- **Dynamic Data Visualization:** Allows users to generate graphs based on query results and customized graph parameters.
 
-# Display stored query results if available
-if st.session_state.query_results is not None and not st.session_state.query_results.empty:
-    st.subheader("🔍 Query Results")
-    st.dataframe(st.session_state.query_results)
+---
 
-    # Dynamic Data Visualization
-    st.subheader("📊 Visualization of Query Results")
-    all_columns = list(st.session_state.query_results.columns)
-    # X-axis selection
-    x_axis = st.selectbox("Select X-Axis", all_columns, index=0, key='x_axis')
-    # Y-axis selection
-    y_axis = st.multiselect("Select Y-Axis", all_columns, default=[all_columns[1]] if len(all_columns) > 1 else [all_columns[0]], key='y_axis')
-    # Chart type selection
-    chart_type = st.selectbox("Select Chart Type", ["Scatter", "Line", "Bar", "Histogram"], key='chart_type')
+## Using the Dashboard
+### **1. Selecting a Table**
+1. Navigate to the **sidebar**.
+2. Click the dropdown menu under **Database Controls**.
+3. Select a table (e.g., `Players`, `Tournaments`).
+4. The first 100 rows of the selected table will appear in the main display.
 
-    # Generate the selected visualization
-    if chart_type == "Scatter":
-        fig = px.scatter(st.session_state.query_results, x=x_axis, y=y_axis, title="Scatter Plot")
-    elif chart_type == "Line":
-        fig = px.line(st.session_state.query_results, x=x_axis, y=y_axis, title="Line Chart")
-    elif chart_type == "Bar":
-        fig = px.bar(st.session_state.query_results, x=x_axis, y=y_axis, title="Bar Chart")
-    elif chart_type == "Histogram":
-        fig = px.histogram(st.session_state.query_results, x=x_axis, title="Histogram")
+### **2. Running a Custom SQL Query**
+1. Scroll to **Run a Custom SQL Query** in the sidebar.
+2. Enter your SQL query (e.g., `SELECT * FROM Players LIMIT 10;`).
+3. Click **Run Query**.
+4. The results will be displayed in the **Query Results** section.
 
-    #plot the chart
-    st.plotly_chart(fig)
+### **3. Visualizing Data**
+1. Once the query results are displayed, go to the **Visualization of Query Results** section.
+2. Select an **X-axis** column from the dropdown.
+3. Select one or more **Y-axis** columns.
+4. Choose a **chart type** (Scatter, Line, Bar, Histogram).
+5. The selected graph will be displayed dynamically.
 
-st.sidebar.info("Use this dashboard to query and visualize your MySQL data interactively!")
+
+---
+
+## Troubleshooting
+### **Database Connection Issues**
+If the app fails to connect to MySQL:
+- Ensure MySQL is running:
+  ```bash
+  sudo systemctl start mysql  # Linux/macOS
+  net start mysql  # Windows
+  ```
+- Verify database credentials in the `connect_db()` function.
+
+### **Slow Performance When Running Queries**
+- Use `LIMIT` to restrict query results:
+  ```sql
+  SELECT * FROM Players LIMIT 50;
+  ```
+
+
