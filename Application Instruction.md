@@ -5,7 +5,7 @@ The **Golf Analytics Application** is a web-based application built using **Stre
 
 
 ## Pre-requisites
-### **Step 1: Python Libraries and Packages
+### **Step 1: Python Libraries and Packages**
 Ensure you have Python and the required libraries installed. Use the following command in your terminal:
 ```bash
 pip install streamlit mysql-connector-python pandas plotly
@@ -17,7 +17,7 @@ Install MySQL/MySQLWorkBench and run golf_dbsetup_script.sql, a script that will
 - Create tables and schemas
 - Load data
 
-### **Step 3: Database and Interface Connection
+### **Step 3: Database and Interface Connection**
 - Open Golf_SQL_Interface.py file, and update the placeholders in lines 8-15 with your own MySQL administration data.
 - Save the file.
 
