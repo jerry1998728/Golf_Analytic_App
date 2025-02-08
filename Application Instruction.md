@@ -12,13 +12,15 @@ pip install streamlit mysql-connector-python pandas plotly
 ```
 
 ### **Step 2: Database Setup**
-Install MySQL/MySQLWorkBench and run golf_dbsetup_script.sql, a script that will:
+Install MySQL/MySQLWorkBench and run golf_dbsetup_script.sql in MySQLWorkBench, a script that will:
 - Establish database
 - Create tables and schemas
-- Load data
+
+Once Tables are created, right-click on the table names in the schemas under the golf database to:
+- Select "Table Data Import Wizard" and load each csv file to the corresponding tables.
 
 ### **Step 3: Database and Interface Connection**
-- Open Golf_SQL_Interface.py file, and update the placeholders in lines 8-15 with your own MySQL administration data.
+- Open the Golf_SQL_Interface.py file, and update the placeholders in lines 8-15 with your own MySQL administration data.
 - Save the file.
 
 ### **Step 4: Run the Application**
