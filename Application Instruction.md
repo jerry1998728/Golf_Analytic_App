@@ -16,8 +16,12 @@ Install MySQL/MySQLWorkBench and run golf_dbsetup_script.sql in MySQLWorkBench, 
 - Establish database
 - Create tables and schemas
 
-Once Tables are created, right-click on the table names in the schemas under the golf database to:
-- Select "Table Data Import Wizard" and load each csv file to the corresponding tables.
+Once Tables are created, right-click on the table names in the schemas under the golf database to Select "Table Data Import Wizard" and load each csv file to the corresponding tables in the following order:
+- Players
+- Tournaments
+- Tournaments Participation
+- Performance Statistics
+- Financials
 
 ### **Step 3: Database and Interface Connection**
 - Open the Golf_SQL_Interface.py file, and update the placeholders in lines 8-15 with your own MySQL administration data.
