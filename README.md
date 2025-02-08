@@ -1,4 +1,4 @@
-# PGA Tour Golf Data (2015-2022) - GitHub Repository
+# PGA Tour Golf Data (2015-2022)
 
 ## 📌 Introduction
 This project provides a comprehensive **PGA Tour Golf Data** dataset covering the years **2015 to 2022**. The database consolidates information about **players, tournaments, scores, and performance metrics**, making it easier for users to access and analyze historical and current data.
