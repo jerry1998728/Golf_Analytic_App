@@ -1,35 +1,44 @@
-import streamlit as st
+
+# Importing installed packages\import streamlit as st
 import mysql.connector
 import pandas as pd
 import plotly.express as px
+import streamlit as st
 
 # Function to establish MySQL database connection
 def connect_db():
     return mysql.connector.connect(
-        host="127.0.0.1",
+        host="###.#.#.#",
         user="root", 
-        password="Broncos1998!", 
+        password="###########", 
         database="golf"
-    )
+        )
 
 # Function to execute SQL queries
 def run_query(query):
+    #set database connection to None
+    conn = None
     try:
+        # Connect database
         conn = connect_db()
         cursor = conn.cursor(dictionary=True)
+        # Execute user query
         cursor.execute(query)
         data = cursor.fetchall()
+        # Return result in dataframe
         return pd.DataFrame(data)
     except Exception as e:
+        # Error message
         st.error(f"Error executing query: {e}")
         return pd.DataFrame()
     finally:
-        conn.close()
+        if conn:
+            conn.close()
 
 # Streamlit UI
-st.set_page_config(page_title="MySQL Dashboard", layout="wide")
+st.set_page_config(page_title="PGA Tour Analytics", layout="wide")
 
-st.title("📊 MySQL Interactive Dashboard")
+st.title("PGA Tour Analytics")
 
 # Sidebar: Select a Table to Query
 st.sidebar.header("Database Controls")
@@ -82,7 +91,8 @@ if st.session_state.query_results is not None and not st.session_state.query_res
         fig = px.bar(st.session_state.query_results, x=x_axis, y=y_axis, title="Bar Chart")
     elif chart_type == "Histogram":
         fig = px.histogram(st.session_state.query_results, x=x_axis, title="Histogram")
-    
+
+    #plot the chart
     st.plotly_chart(fig)
 
-st.sidebar.info("🔹 Use this dashboard to query and visualize your MySQL data interactively!")
+st.sidebar.info("Use this dashboard to query and visualize your MySQL data interactively!")
