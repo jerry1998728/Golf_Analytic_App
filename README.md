@@ -1,19 +1,19 @@
 # PGA Tour Golf Data (2015-2022)
 
-## 📌 Introduction
+## Introduction
 This project provides a comprehensive **PGA Tour Golf Data** dataset covering the years **2015 to 2022**. The database consolidates information about **players, tournaments, scores, and performance metrics**, making it easier for users to access and analyze historical and current data.
 
-### 🔹 Key Features
+### Key Features
 - **Enhanced Fan Engagement**: Users can explore detailed statistics such as **player rankings, performance trends, and tournament histories**.
 - **Comprehensive Querying & Analysis**: Analysts and fantasy sports enthusiasts can track and analyze **PGA tournament information**.
 - **Interactive Web Application**: A **MySQL Interactive Dashboard** built with **Streamlit** allows users to query and visualize PGA Tour data dynamically.
 
 ---
 
-## 🗄️ Database Design
+## Database Design
 This project includes an SQL database named **golf**, structured with five main tables: **Players, Tournaments, TournamentParticipation, PerformanceStats, and Financials**.
 
-### **📌 Tables & Attributes**
+### **Tables & Attributes**
 #### **1. Players**
 - `player_id` (INT, PRIMARY KEY) - Unique identifier for each player.
 - `player_name` (VARCHAR(100)) - Name of the player.
@@ -47,7 +47,7 @@ This project includes an SQL database named **golf**, structured with five main 
 - `season` (INT, FOREIGN KEY → year)
 - **Primary Key:** (`tournament_id`, `player_id`)
 
-### **🔗 Relationships**
+### **Relationships**
 - **Players ↔ TournamentParticipation** (*Many-to-Many*)
 - **Tournaments ↔ TournamentParticipation** (*Many-to-Many*)
 - **Players & Tournaments ↔ PerformanceStats** (*Many-to-Many with Additional Data*)
@@ -58,21 +58,16 @@ This project includes an SQL database named **golf**, structured with five main 
 ## 🖥️ Application Implementation
 The project features a **MySQL Interactive Dashboard** built with **Streamlit** to enable dynamic querying and visualization of PGA Tour data.
 
-### **📌 Features**
+### **Features**
 - **Custom SQL Querying**: Users can enter and execute SQL queries interactively.
 - **Preloaded Table View**: View any table instantly to prepare for **JOIN queries**.
 - **Data Visualization**: Users can customize visualization for their own query results based on easy parameters selection **x-axis, y-axis, and graph type**.
 - **Performance Metrics & Fantasy Points**: Detailed statistics for each player.
 
-### **📊 Visualization Enhancements**
-- **Dynamic Column Selection**: Prevents errors by allowing only numerical columns for plotting.
-- **Plotly Integration**: Users can generate **histograms, bar charts, and scatter plots**.
-- **Summary Statistics**: Data preview before visualization for better insights.
-
 ---
 
 ## Challenges & Solutions
-### **1️⃣ Database Connection Issues**
+### **Database Connection Issues**
 **Problem**: Initial failures in establishing communication between **Streamlit** and **MySQL**.
 -- **Solution**:
 - Ensured **MySQL server was running**:
@@ -82,7 +77,7 @@ The project features a **MySQL Interactive Dashboard** built with **Streamlit** 
   ```
 - Verified **credentials (host, user, password, database)** in `connect_db()`.
 
-### **2️⃣ Query Performance Issues**
+### **Query Performance Issues**
 **Problem**: Running queries like `SELECT * FROM Players;` resulted in slow loading.
 **Solution**:
 - Used `LIMIT` to restrict query results:
